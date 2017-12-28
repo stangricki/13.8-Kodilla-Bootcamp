@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Section 5: Advanced JavaScript: Objects and Functions</title>
+    </head>
+
+    <body onload="play()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Harry_Potter_wordmark.svg/1200px-Harry_Potter_wordmark.svg.png">
+        
+        <script>
+function play() {
+	var score = 0;
+	function quizGame() {
+		function Question(question, possibleAnswersArray, correctAnswer) {
+			this.question = question;
+			this.possibleAnswersArray = possibleAnswersArray;
+			this.correctAnswer = correctAnswer;
+		}
+
+		Question.prototype.questionDisplay = function() {
+			console.log(this.question);
+			for (var i = 0; i < this.possibleAnswersArray.length; i++) {
+				console.log(i + ' : ' + this.possibleAnswersArray[i])
+			}
+		}
+		
+		Question.prototype.usersPick = function() {
+			var userChoice = prompt('What is the correct answer?');
+			
+			if (this.correctAnswer === parseInt(userChoice)) {
+				console.log('Correct!');
+				score++;
+				console.log('------------------------------------')
+				console.log('Your current score is: ' + score);
+				console.log('------------------------------------')
+				nextGame()
+			} else if (userChoice === null || userChoice === 'exit') {
+				console.log ('Thank you for playing!')
+			} else {
+				console.log('Wrong answer, try again :)');
+				console.log('------------------------------------')
+				console.log('Your current score is: ' + score);
+				console.log('------------------------------------')
+				nextGame();
+			}
+		}
+
+		var q1 = new Question('Who was a redhead in Harry Potter series?',['Ron Weasley', 'Harry Potter','Hermiona Granger', 'Aleksandra Stangricka'], 0);
+		var q2 = new Question('What is the name of Harry\'s child?',['Philip John', 'Albus Severus','Magic Jin', 'Adolf Hitler'], 1);
+		var q3 = new Question('How many broomsticks are flown in a full game of Quidditch?',['Fifteen', 'Fourteen', 'Sixteen','Two hundred and sixty seven'], 0);
+		var q4 = new Question('What creature is depicted in the emblem for Gryffindor house?',['A snake', 'A lion', 'An eagle', 'A badger'], 1); 
+		var q5 = new Question('True or false: Professor Dumbledore\'s spectacles are rectangular?',['True', 'False'], 1); 
+		var questionArray = [q1, q2, q3, q4, q5];
+		
+		function nextGame() {
+			var n = Math.floor(Math.random() * questionArray.length);
+			var randomQuestion = questionArray[n];
+			randomQuestion.questionDisplay();
+			randomQuestion.usersPick();
+		}
+		nextGame()
+	}
+	quizGame()
+}
+       </script>
+    </body>
+</html>
